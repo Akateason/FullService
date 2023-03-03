@@ -8,7 +8,6 @@ require (
 	github.com/xormplus/xorm v0.0.0-20210822100304-4e1d4fcc1e67
 )
 
-require github.com/Akateason/GoScriptPlayground v0.0.0-incompatible
 replace github.com/Akateason/GoScriptPlayground => ../GoScriptPlayground
 
 require (
@@ -45,7 +44,5 @@ require (
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	
-)
 
-  
+)

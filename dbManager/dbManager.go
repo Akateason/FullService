@@ -2,7 +2,7 @@
  * @Author: Mamba24 akateason@qq.com
  * @Date: 2023-03-03 23:27:12
  * @LastEditors: Mamba24 akateason@qq.com
- * @LastEditTime: 2023-03-04 00:02:24
+ * @LastEditTime: 2023-03-04 01:46:15
  * @FilePath: /FullService/dbManager/dbManager.go
  * @Description: ORM Database Manager
  *
@@ -11,8 +11,8 @@
 package dbManager
 
 import (
+	"FullService/person"
 	"fmt"
-	"time"
 
 	"github.com/xormplus/xorm"
 )
@@ -22,30 +22,28 @@ var engine *xorm.Engine
 func SetupDatabase() {
 	var err error
 	engine, err = xorm.NewEngine("sqlite3", "./test.db")
-	fmt.Println(err)
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	err = engine.Sync2(new(User))
+	err = engine.Sync2(new(person.Person))
 
-	user := new(User)
-	user.Name = "myname"
-	user.Id = 1
-	affected, err := engine.Insert(user)
+	user1 := new(person.Person)
+	user1.Name = "myname"
+	user1.Id = 2
+	affected, err := engine.Insert(user1)
 	// INSERT INTO user (name) values (?)
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Println(affected)
-	fmt.Println(err)
 
-	users := make([]User, 0)
+	users := make([]person.Person, 0)
 	err = engine.Find(&users)
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Println(err)
+	fmt.Println("select all")
 	fmt.Println(users)
-}
-
-type User struct {
-	Id      int64
-	Name    string
-	Sex     string
-	Age     int
-	Passwd  string
-	Created time.Time `xorm:"created"`
-	Updated time.Time `xorm:"updated"`
 }
