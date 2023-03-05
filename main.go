@@ -2,7 +2,7 @@
  * @Author: Mamba24 akateason@qq.com
  * @Date: 2022-12-04 22:20:26
  * @LastEditors: Mamba24 akateason@qq.com
- * @LastEditTime: 2023-03-04 01:43:16
+ * @LastEditTime: 2023-03-05 18:05:03
  * @FilePath: /FullService/main.go
  * @Description: Web+DB
  *
@@ -27,4 +27,5 @@ func openServices() {
 
 	// web
 	// webservice.SetupWebservice()
+
 }

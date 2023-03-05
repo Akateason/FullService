@@ -2,7 +2,7 @@
  * @Author: Mamba24 akateason@qq.com
  * @Date: 2023-03-03 23:27:12
  * @LastEditors: Mamba24 akateason@qq.com
- * @LastEditTime: 2023-03-04 01:46:15
+ * @LastEditTime: 2023-03-05 18:45:51
  * @FilePath: /FullService/dbManager/dbManager.go
  * @Description: ORM Database Manager
  *
@@ -14,36 +14,85 @@ import (
 	"FullService/person"
 	"fmt"
 
+	"github.com/Akateason/GoScriptPlayground/earth"
 	"github.com/xormplus/xorm"
 )
 
 var engine *xorm.Engine
 
+// setup db
 func SetupDatabase() {
 	var err error
 	engine, err = xorm.NewEngine("sqlite3", "./test.db")
 	if err != nil {
+		fmt.Println("🐒❌db engine link failed")
 		fmt.Println(err)
 	}
+	fmt.Println("🐒db engine link success")
 
-	err = engine.Sync2(new(person.Person))
+	DbBindClass(new(person.Person))
 
 	user1 := new(person.Person)
-	user1.Name = "myname"
-	user1.Id = 2
-	affected, err := engine.Insert(user1)
-	// INSERT INTO user (name) values (?)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(affected)
+	user1.Id = 3
+	user1.Name = "dafsfla"
 
-	users := make([]person.Person, 0)
-	err = engine.Find(&users)
+	Upsert(*user1)
+	SelectAll()
+}
+
+// bind model
+func DbBindClass(beans ...interface{}) {
+	err := engine.Sync2(beans...)
 	if err != nil {
+		fmt.Println("🐒❌bind model failed")
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("🐒 model %T sync success\n", beans...)
+}
+
+// select all
+func SelectAll() []person.Person {
+	users := make([]person.Person, 0)
+	err := engine.Find(&users)
+	if err != nil {
+		fmt.Println("🐒❌select all failed")
 		fmt.Println(err)
 	}
-	fmt.Println(err)
-	fmt.Println("select all")
-	fmt.Println(users)
+	fmt.Println("🐒 select all")
+
+	var _list []interface{}
+	for _, v := range users {
+		_list = append(_list, v)
+	}
+	earth.PrintArray([]interface{}(_list))
+	return users
+}
+
+// insert, update if exsist
+func Upsert(user person.Person) {
+	has, err := engine.Where("Id = ?", user.Id).Exist(&person.Person{})
+	if err != nil {
+		fmt.Println("🐒❌ Exist failed")
+		fmt.Println(err)
+		return
+	}
+	if has { // update
+		affected, err := engine.Update(&user, &person.Person{Id: user.Id})
+		// UPDATE user SET ... Where Id = ?
+		if err != nil {
+			fmt.Println("🐒❌ update failed")
+			fmt.Println(err)
+			return
+		}
+		fmt.Printf("🐒 %d %T update success\n", affected, user)
+	} else { // insert
+		affected, err := engine.Insert(&user)
+		if err != nil {
+			fmt.Println("🐒❌ insert failed")
+			fmt.Println(err)
+			return
+		}
+		fmt.Printf("🐒 %d %T insert success\n", affected, user)
+	}
 }
