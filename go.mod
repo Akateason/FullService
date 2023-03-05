@@ -8,6 +8,8 @@ require (
 	github.com/xormplus/xorm v0.0.0-20210822100304-4e1d4fcc1e67
 )
 
+require github.com/Akateason/GoScriptPlayground v0.0.0
+
 replace github.com/Akateason/GoScriptPlayground => ../GoScriptPlayground
 
 require (
