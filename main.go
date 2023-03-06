@@ -2,7 +2,7 @@
  * @Author: Mamba24 akateason@qq.com
  * @Date: 2022-12-04 22:20:26
  * @LastEditors: Mamba24 akateason@qq.com
- * @LastEditTime: 2023-03-05 19:06:30
+ * @LastEditTime: 2023-03-06 22:47:27
  * @FilePath: /FullService/main.go
  * @Description: Web+DB
  *
@@ -15,6 +15,7 @@ import (
 	"FullService/dbManager"
 	"FullService/person"
 	"FullService/pwd"
+	"FullService/webservice"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -32,6 +33,7 @@ func openServices() {
 	dbManager.DbBindClass(new(pwd.Secret))
 
 	// web
+	webservice.SetupWebservice()
 }
 
 func forUnitTest() {

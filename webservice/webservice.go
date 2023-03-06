@@ -2,7 +2,7 @@
  * @Author: Mamba24 akateason@qq.com
  * @Date: 2023-03-04 00:30:43
  * @LastEditors: Mamba24 akateason@qq.com
- * @LastEditTime: 2023-03-04 00:31:59
+ * @LastEditTime: 2023-03-06 22:50:45
  * @FilePath: /FullService/webservice/webservice.go
  * @Description: gin web manager
  *
@@ -11,6 +11,7 @@
 package webservice
 
 import (
+	"FullService/dbManager"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -22,7 +23,14 @@ func SetupWebservice() {
 	router.POST("/albums", postAlbums)
 	router.GET("/albums/:id", getAlbumByID) // 定向id
 
+	router.GET("/users", getAllUsers)
+
 	router.Run("localhost:8080")
+}
+
+func getAllUsers(c *gin.Context) {
+	list := dbManager.SelectAll()
+	c.IndentedJSON(http.StatusOK, list)
 }
 
 // album represents data about a record album.
