@@ -2,7 +2,7 @@
  * @Author: Mamba24 akateason@qq.com
  * @Date: 2023-03-04 00:48:00
  * @LastEditors: Mamba24 akateason@qq.com
- * @LastEditTime: 2023-03-05 18:57:45
+ * @LastEditTime: 2023-03-06 23:48:34
  * @FilePath: /FullService/pwd/pwd.go
  * @Description:
  *
@@ -10,20 +10,19 @@
  */
 package pwd
 
-import "time"
-
 type Secret struct {
-	Id         int64 // pk
-	Title      string
-	Account    string
-	Password   string
-	DetailInfo string
-	Type       int
-	ReadCount  int
-	Pinyin     string
-	ImageUrl   string
-	IsDelete   bool
-	Created    time.Time `xorm:"created"`
-	Updated    time.Time `xorm:"updated"`
-	SyncTime   time.Time `xorm:"syncTime"`
+	Id         int64  `json:"id"` // pk
+	Title      string `json:"title"`
+	Account    string `json:"account"`
+	Password   string `json:"password"`
+	DetailInfo string `json:"detailInfo"`
+	Type       int    `json:"type"`
+	ReadCount  int    `json:"readCount"`
+	Pinyin     string `json:"pinyin"`
+	ImageUrl   string `json:"imageUrl"`
+	IsDelete   bool   `json:"isDelete"`
+	UserId     int64  `json:"userid"`
+	Created    int64  `xorm:"created" json:"created"`
+	Updated    int64  `xorm:"updated" json:"updated"`
+	SyncTime   int64  `xorm:"syncTime"`
 }
