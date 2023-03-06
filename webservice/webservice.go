@@ -2,7 +2,7 @@
  * @Author: Mamba24 akateason@qq.com
  * @Date: 2023-03-04 00:30:43
  * @LastEditors: Mamba24 akateason@qq.com
- * @LastEditTime: 2023-03-07 01:08:53
+ * @LastEditTime: 2023-03-07 01:11:23
  * @FilePath: /FullService/webservice/webservice.go
  * @Description: gin web manager
  *
@@ -27,7 +27,7 @@ func SetupWebservice() {
 
 	router.GET("/users", getAllUsers)
 	router.POST("/user", postUser)
-	router.GET("/user", getUserById)
+	router.GET("/user", getUserByName)
 
 	router.Run("localhost:8080")
 }
@@ -57,7 +57,7 @@ func postUser(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, result)
 }
 
-func getUserById(c *gin.Context) {
+func getUserByName(c *gin.Context) {
 	name := c.Query("name")
 	if name == "" {
 		result := model.ResultData{Success: false, ErrorMessage: "参数错误:"}
