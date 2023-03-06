@@ -2,7 +2,7 @@
  * @Author: Mamba24 akateason@qq.com
  * @Date: 2023-03-04 00:30:43
  * @LastEditors: Mamba24 akateason@qq.com
- * @LastEditTime: 2023-03-07 01:11:23
+ * @LastEditTime: 2023-03-07 01:19:54
  * @FilePath: /FullService/webservice/webservice.go
  * @Description: gin web manager
  *
@@ -12,7 +12,6 @@ package webservice
 
 import (
 	model "FullService/Model"
-	"FullService/dbManager"
 	"FullService/person"
 	"net/http"
 
@@ -26,14 +25,14 @@ func SetupWebservice() {
 	// router.GET("/albums/:id", getAlbumByID) // 定向id
 
 	router.GET("/users", getAllUsers)
-	router.POST("/user", postUser)
 	router.GET("/user", getUserByName)
+	router.POST("/user", postUser)
 
 	router.Run("localhost:8080")
 }
 
 func getAllUsers(c *gin.Context) {
-	list := dbManager.SelectAll()
+	list := person.SelectAll()
 	data := interface{}(list)
 	result := model.ResultData{Data: data, Success: true}
 	c.IndentedJSON(http.StatusOK, result)
@@ -47,7 +46,7 @@ func postUser(c *gin.Context) {
 		return
 	}
 
-	if err := dbManager.Upsert(newUser); err != nil {
+	if err := person.Upsert(newUser); err != nil {
 		result := model.ResultData{Success: false, ErrorMessage: "表插入错误:" + err.Error()}
 		c.IndentedJSON(http.StatusBadRequest, result)
 		return
@@ -65,7 +64,7 @@ func getUserByName(c *gin.Context) {
 		return
 	}
 
-	person := dbManager.GetByName(name)
+	person := person.GetByName(name)
 	result := model.ResultData{Data: person, Success: true}
 	c.IndentedJSON(http.StatusOK, result)
 }

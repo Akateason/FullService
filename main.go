@@ -2,7 +2,7 @@
  * @Author: Mamba24 akateason@qq.com
  * @Date: 2022-12-04 22:20:26
  * @LastEditors: Mamba24 akateason@qq.com
- * @LastEditTime: 2023-03-06 23:42:31
+ * @LastEditTime: 2023-03-07 01:18:52
  * @FilePath: /FullService/main.go
  * @Description: Web+DB
  *
@@ -37,14 +37,12 @@ func openServices() {
 }
 
 func forUnitTest() {
-	user1 := new(person.Person)
-	user1.Id = 0
-	user1.Name = "yes"
-	user1.Sex = "male"
-	dbManager.Upsert(*user1)
+	// user1 := new(person.Person)
+	// user1.Id = 0
+	// user1.Name = "yes"
+	// user1.Sex = "male"
+	// dbManager.Upsert(*user1)
 
-	dbManager.SelectAll()
+	person.SelectAll()
 
-	// web
-	// webservice.SetupWebservice()
 }
