@@ -2,7 +2,7 @@
  * @Author: Mamba24 akateason@qq.com
  * @Date: 2023-03-03 23:27:12
  * @LastEditors: Mamba24 akateason@qq.com
- * @LastEditTime: 2023-03-05 18:45:51
+ * @LastEditTime: 2023-03-05 18:59:19
  * @FilePath: /FullService/dbManager/dbManager.go
  * @Description: ORM Database Manager
  *
@@ -29,15 +29,6 @@ func SetupDatabase() {
 		fmt.Println(err)
 	}
 	fmt.Println("🐒db engine link success")
-
-	DbBindClass(new(person.Person))
-
-	user1 := new(person.Person)
-	user1.Id = 3
-	user1.Name = "dafsfla"
-
-	Upsert(*user1)
-	SelectAll()
 }
 
 // bind model
